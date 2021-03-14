@@ -1,7 +1,9 @@
 const request = require("supertest");
 const app = require("../");
 
-const { validate: isUuid } = require("uuid");
+const {
+  validate
+} = require("uuid");
 
 describe("Projects", () => {
   it("should be able to create a new repository", async () => {
@@ -13,7 +15,7 @@ describe("Projects", () => {
         techs: ["Node", "Express", "TypeScript"]
       });
 
-    expect(isUuid(response.body.id)).toBe(true);
+    expect(validate(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
       url: "https://github.com/Rocketseat/umbriel",
@@ -22,18 +24,18 @@ describe("Projects", () => {
       likes: 0
     });
 
-    const { body: repositoriesList } = await request(app).get("/repositories");
+    const {
+      body: repositoriesList
+    } = await request(app).get("/repositories");
 
     expect(repositoriesList).toEqual(
-      expect.arrayContaining([
-        {
-          id: response.body.id,
-          url: "https://github.com/Rocketseat/umbriel",
-          title: "Umbriel",
-          techs: ["Node", "Express", "TypeScript"],
-          likes: 0
-        }
-      ])
+      expect.arrayContaining([{
+        id: response.body.id,
+        url: "https://github.com/Rocketseat/umbriel",
+        title: "Umbriel",
+        techs: ["Node", "Express", "TypeScript"],
+        likes: 0
+      }])
     );
   });
 
@@ -49,15 +51,13 @@ describe("Projects", () => {
     const response = await request(app).get("/repositories");
 
     expect(response.body).toEqual(
-      expect.arrayContaining([
-        {
-          id: repository.body.id,
-          url: "https://github.com/Rocketseat/umbriel",
-          title: "Umbriel",
-          techs: ["Node", "Express", "TypeScript"],
-          likes: 0
-        }
-      ])
+      expect.arrayContaining([{
+        id: repository.body.id,
+        url: "https://github.com/Rocketseat/umbriel",
+        title: "Umbriel",
+        techs: ["Node", "Express", "TypeScript"],
+        likes: 0
+      }])
     );
   });
 
@@ -78,7 +78,7 @@ describe("Projects", () => {
         techs: ["React", "ReactNative", "TypeScript", "ContextApi"]
       });
 
-    expect(isUuid(response.body.id)).toBe(true);
+    expect(validate(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
       url: "https://github.com/Rocketseat/unform",
